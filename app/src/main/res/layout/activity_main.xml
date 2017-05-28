@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.example.leechaelin.multithread_hw.MainActivity"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:background="#f9e9e9"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="메뉴 이미지 변경 간격(초) "/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edittext"
+            android:layout_weight="0.58" />
+        <Button
+            android:onClick="onClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="처음으로 "
+            android:id="@+id/init"/>
+    </LinearLayout>
+
+    <TextView
+        android:padding="10dp"
+        android:textColor="#942727"
+        android:textSize="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="당신의 선택은? "
+        android:layout_gravity="center_horizontal"/>
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="256dp"
+        android:layout_height="277dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="116dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:text="시작부터 0초"
+        android:id="@+id/textview"
+        android:textColor="#354daa"
+        android:textSize="20dp"
+        android:layout_weight="0.17" />
+
+</LinearLayout>
