@@ -17,12 +17,19 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     EditText e1;
     ImageView image;
+    Boolean chosen=false,start=false;
 
     final static int[] imagelist={R.drawable.p1,R.drawable.p2,R.drawable.p3,R.drawable.p4,R.drawable.p5,R.drawable.p6,
-            R.drawable.p7,R.drawable.p8,R.drawable.p9,R.drawable.p10,R.drawable.p11,R.drawable.p12,R.drawable.p13};
+            R.drawable.p7,R.drawable.p8,R.drawable.p9,R.drawable.p10,R.drawable.p11,R.drawable.p12,R.drawable.p13,
+    R.drawable.p14,R.drawable.p14,R.drawable.p15,R.drawable.p16,R.drawable.p17};
+
+    String [] name = {"강다니엘","김사무엘","김재환","김종현","라이관린","황민현","이우진","이대휘","이건휘 ","유선호","옹성우","박성우","박지훈",
+    "하성운 ","켄타","이의웅","권현빈 "};
     TextView t1;
     myTasks task1;
 
+    private int result = 0;
+    private int namenum = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +42,24 @@ public class MainActivity extends AppCompatActivity {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(task1==null) {
+                //사진이 선택이 되어버렸다
+                Log.d("chosen",String.valueOf(chosen));
+                Log.d("start",String.valueOf(start));
+                if(chosen){
+                    if(start==true){
+                        t1.setText(name[namenum%17]+"를 선택!("+result+")초");
+                        start = false;
+                    }
+                    task1.cancel(true);
+                    chosen = false;
+                    Log.d("start1",String.valueOf(start));
+
+                }else{
                     task1 = new myTasks();
                     String time = e1.getText().toString();
                     task1.execute(Integer.parseInt(time));
+                    chosen = true;
+                    start = true;
                 }
             }
         });
@@ -48,10 +69,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View v){
         if(v.getId()==R.id.init){
-            startActivity(new Intent(MainActivity.this,MainActivity.class));
+//            startActivity(new Intent(MainActivity.this,MainActivity.class));
+//            finish();
+            image.setImageResource(R.drawable.start);
+            t1.setText("");
+            t1.setVisibility(View.INVISIBLE);
+            e1.setText("");
+            result = 0;
+            Log.d("chosen",String.valueOf(chosen));
+            Log.d("start",String.valueOf(start));
+
         }
     }
     class myTasks extends AsyncTask<Integer,Integer,Void>{
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -67,8 +98,10 @@ public class MainActivity extends AppCompatActivity {
                 if(isCancelled()==true) return null;
                 try{
                     Thread.sleep(1000);
+                    result = i;
                     //그림을 바꾸어야한다
                     if(i%params[0]==0){
+
                         publishProgress(i,j++);
                     }
                     //
@@ -89,8 +122,9 @@ public class MainActivity extends AppCompatActivity {
                 //초만 바꿔준다
                 t1.setText("시작부터 "+values[0]+"초");
             }else{
+                namenum = values[1];
                 t1.setText("시작부터 "+values[0]+"초");
-                image.setImageResource(imagelist[values[1]%13]);
+                image.setImageResource(imagelist[values[1]%17]);
 
             }
 
@@ -101,10 +135,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            t1.setText("선택이 완료");
 
         }
-
         @Override
         protected void onCancelled() {
             super.onCancelled();
